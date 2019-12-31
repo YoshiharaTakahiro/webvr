@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+        <title>初めてのHTML</title>
+    </head>
+    <body>
+        ※ブラウザはsafari推奨です。Androidは動作が不安定です。<br>
+        ★Androidを含むすべての端末はhttpsで接続してください。<br>
+        ★iOS12のiPhoneは「設定」＞「Safari」＞「プライバシーとセキュリティ：モーションと画面の向きのアクセス」のスイッチをONにして下さい。<br>
+        ★iOS13以降のiPhoneは下記ボタンをクリックしてモーション取得の許可をして下さい。<br>
+        <button type="button" id="request_permission">iOS13モーションの許可</button><br>
+        
+        <script type="text/javascript">
+            document.getElementById("request_permission").addEventListener("click", function(){
+              if (
+                DeviceMotionEvent &&
+                DeviceMotionEvent.requestPermission &&
+                typeof DeviceMotionEvent.requestPermission === 'function'
+              ) {
+                DeviceMotionEvent.requestPermission();
+              }
+              if (
+                DeviceOrientationEvent &&
+                DeviceOrientationEvent.requestPermission &&
+                typeof DeviceOrientationEvent.requestPermission === 'function'
+              ) {
+                DeviceOrientationEvent.requestPermission();
+              }
+            })
+        </script>
+        
+        モーション許可済みの場合は下記ボタンをクリック。<br>
+        <button onclick="location.href='./home.html'">WebVR</button>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- A-FrameのライブラリをCNDで取得(別途javaScriptをダウンロードしてローカルで読み込むことも可能) -->
+        <script src="js/aframe.min.js"></script>
+        <script src="js/aframe-html-shader.min.js"></script>
+    </head>
+    <body>
+
+        <a-scene >
+
+            <!-- ファイルなどはアセットにすることで先にロードされキャッシュされる -->
+            <a-assets timeout="10000">
+                <!-- 背景画像 -->
+                <img id="sky" src="image/sky.png">
+                <img id="night" src="image/night.png">
+                <img id="city" src="image/city.png">
+                <img id="beach" src="image/beach.png">
+                <img id="sea" src="image/sea.png">
+                <img id="yozora" src="image/yozora.png">
+
+                <!-- テクスチャ用画像 -->
+                <img id="earth" src="image/earth2.jpg">
+                <img id="brick" src="image/brick.jpg">
+                <img id="carpet" src="image/carpet.jpg">
+
+                <!-- 3Dモデル -->
+                <a-asset-item id="tarte-obj" src="model/tarte/scene.gltf"></a-asset-item>
+                <a-asset-item id="door-obj" src="model/door/scene.gltf"></a-asset-item>
+                <a-asset-item id="flashlight-obj" src="model/flashlight/scene.gltf"></a-asset-item>
+                
+            </a-assets>
+
+            <!-- カメラの高さを170cmに設定することで目線が自然になる -->
+            <a-camera position="0 1.7 0">
+                <!-- fuse:注視によるクリックイベント制御-->
+                <a-cursor fuse="true" color="red"></a-cursor>
+            </a-camera>
+
+            <!-- 立方体 -->
+            <a-box position="0 0.4 -4" rotation="0 45 0" scale="0.8 0.8 0.8" color="yellow" shadow></a-box>
+
+            <!-- 円柱 -->
+            <a-cylinder id="cylinder" position="1.4 0.5 -5.5" radius="0.5" scale="1 1 1" src="#brick" shadow></a-cylinder>
+
+            <!-- 平面：x軸を90度回転させることで床面にする -->
+            <a-plane position="0 0 -2" rotation="-90 0 0" width="6" height="10" src="#carpet" repeat="6 10" shadow></a-plane>
+
+            <!-- 球体 -->
+            <a-sphere position="-1.5 1.5 -3" radius="0.75" src="#earth" rotation="0 150 0" shadow>
+                <!-- alternateで反復 indefiniteで無限 -->
+                <a-animation attribute="position" to="-1.5 1.6 -3" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
+                <a-animation attribute="rotation" begin="click" dur="10000" to="0 510 0"></a-animation>
+            </a-sphere>
+
+            <!-- テキスト表示:デフォルトのままだと日本語は使用できない -->
+            <a-text value="Hello, A-Frame!" color="#888" position="-0.9 7 -7" scale="1.5 1.5 1.5"></a-text>
+
+            <!-- 3Dモデル -->
+            <a-entity id="door" gltf-model="#door-obj" position="0 0 2" rotation="0 90 0" scale="0.2 0.2 0.2" shadow></a-entity>
+            <a-entity id="flashlight" gltf-model="#flashlight-obj" position="1.4 0.2 -2" rotation="0 -90 0" scale="0.3 0.3 0.3" color="#F00" shadow></a-entity>
+            <!-- <a-entity id="tarte" gltf-model="#tarte-obj" position="0 0.7 -4" scale="0.02 0.02 0.02" data-link="https://www.pablo3.com/" shadow></a-entity> -->
+            
+
+            <!-- 背景設定（全天球画像） -->
+            <a-sky id="background" src="">
+                <a-animation attribute="color" begin="fade" dur="750" from="black" to="white" easing="ease-out"></a-animation>
+            </a-sky>
+
+            <!-- イベント作成のためのJavaScript(上記オブジェクトに対して処理をするためここで呼び出し) -->
+            <script src="js/event.js"></script>
+
+        </a-scene>
+    </body>
+</html>
